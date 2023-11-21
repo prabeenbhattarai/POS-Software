@@ -27,10 +27,10 @@ class PenjualanController extends Controller
                 return format_uang($penjualan->total_item);
             })
             ->addColumn('total_harga', function ($penjualan) {
-                return 'Rs. '. format_uang($penjualan->total_harga);
+                return '$ '. format_uang($penjualan->total_harga);
             })
             ->addColumn('bayar', function ($penjualan) {
-                return 'Rs. '. format_uang($penjualan->bayar);
+                return '$ '. format_uang($penjualan->bayar);
             })
             ->addColumn('tanggal', function ($penjualan) {
                 return tanggal_indonesia($penjualan->created_at, false);
@@ -111,13 +111,13 @@ class PenjualanController extends Controller
                 return $detail->produk->nama_produk;
             })
             ->addColumn('harga_jual', function ($detail) {
-                return 'Rs. '. format_uang($detail->harga_jual);
+                return '$ '. format_uang($detail->harga_jual);
             })
             ->addColumn('jumlah', function ($detail) {
                 return format_uang($detail->jumlah);
             })
             ->addColumn('subtotal', function ($detail) {
-                return 'Rs. '. format_uang($detail->subtotal);
+                return '$ '. format_uang($detail->subtotal);
             })
             ->rawColumns(['kode_produk'])
             ->make(true);
@@ -176,7 +176,7 @@ class PenjualanController extends Controller
 
         $pdf = PDF::loadView('penjualan.nota_besar', compact('setting', 'penjualan', 'detail'));
         $pdf->setPaper(0,0,609,440, 'potrait');
-        return $pdf->stream('New_Rajesh_Hardware_-'. date('Y-m-d-his') .'.pdf');
+        return $pdf->stream('Transaction-'. date('Y-m-d-his') .'.pdf');
     }
 }
 // visit "codeastro" for more projects!

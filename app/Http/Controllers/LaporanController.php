@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Pembelian;
 use App\Models\Pengeluaran;
 use App\Models\Penjualan;
-
 use Illuminate\Http\Request;
 use PDF;
 
@@ -42,7 +41,6 @@ class LaporanController extends Controller
             $pendapatan = $total_penjualan - $total_pembelian - $total_pengeluaran;
             $total_pendapatan += $pendapatan;
 
-
             $row = array();
             $row['DT_RowIndex'] = $no++;
             $row['tanggal'] = tanggal_indonesia($tanggal, false);
@@ -50,8 +48,6 @@ class LaporanController extends Controller
             $row['pembelian'] = format_uang($total_pembelian);
             $row['pengeluaran'] = format_uang($total_pengeluaran);
             $row['pendapatan'] = format_uang($pendapatan);
-            $row['pendapatan'] = format_uang($pendapatan);
-
 
             $data[] = $row;
         }
@@ -80,9 +76,9 @@ class LaporanController extends Controller
     public function exportPDF($awal, $akhir)
     {
         $data = $this->getData($awal, $akhir);
-        $pdf  = PDF::loadView('new_rajesh_hardware.pdf', compact('awal', 'akhir', 'data'));
+        $pdf  = PDF::loadView('laporan.pdf', compact('awal', 'akhir', 'data'));
         $pdf->setPaper('a4', 'potrait');
         
-        return $pdf->stream('new_rajesh_hardware-'. date('Y-m-d-his') .'.pdf');
+        return $pdf->stream('Laporan-pendapatan-'. date('Y-m-d-his') .'.pdf');
     }
 }
